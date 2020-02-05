@@ -1,0 +1,33 @@
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+#gains:
+    #left_hand_Thumb_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Thumb_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Thumb_j3: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Index_Finger_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    ##left_hand_Index_Finger_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Middle_Finger_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Middle_Finger_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Ring_Finger_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Ring_Finger_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Ring_Finger_j3: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Pinky_Finger_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Pinky_Finger_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    #left_hand_Pinky_Finger_j3: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      
+#gazebo_ros_control/pid_gains:
+  #left_hand_Thumb_j1: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Thumb_j2: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Thumb_j3: {p: 1.0, i: 0.1, d: 0.01}
+  ##left_hand_Index_Finger_j1: {p: 1.0, i: 0.1, d: 0.01}
+  ##left_hand_Index_Finger_j2: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Middle_Finger_j1: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Middle_Finger_j2: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Ring_Finger_j1: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Ring_Finger_j2: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Ring_Finger_j3: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Pinky_Finger_j1: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Pinky_Finger_j2: {p: 1.0, i: 0.1, d: 0.01}
+  #left_hand_Pinky_Finger_j3: {p: 1.0, i: 0.1, d: 0.01}

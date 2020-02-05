@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- global PARAMS Change here if needed -->
+  <arg name="gui" default="False" />
+  <arg name="autostart" default="true"/>
+  <arg name="serial_device" default="/dev/ttyUSB0"/>
+  <arg name="simulation" default="False"/>
+  <arg name="logging_config" default="$(find puthand_driver)/etc/logging.xml" />
+  <arg name="use_internal_logging" default="False"/>
+  <arg name="controller_config" default="$(find puthand_driver)/etc/controller_user.yaml" />
+  <arg name="general_config" default="$(find puthand_driver)/etc/puthand.yaml" />
+  <arg name="name_prefix" default="left_hand" />
+  <arg name="with_optoforce" default="false" />
+
+
+  <!-- BEWARE SET THIS TO TRUE TO USE THE HAND WITHOUT ANY OTHER ROS TOOL -->
+  <arg name="standalone" default="false"/>
+
+  <!-- load basic configuration -->
+  <rosparam file="$(arg general_config)" command="load" ns="puthand_controller"/>
+  <!-- Load Yaml Configuration file-->
+  <rosparam file="$(find puthand_driver)/etc/controller_default.yaml" command="load" ns="puthand_controller"/>
+  <!-- Load the User Config file which will overwrite values from default -->
+  <rosparam file="$(arg controller_config)" command="load" ns="puthand_controller"/>
+
+  <!-- Robot description for State publishers -->
+  <param unless="$(arg standalone)" name="robot_description" command="$(find xacro)/xacro --inorder $(find puthand_driver)/description/urdf/puthand-standalone.urdf.xacro" />
+
+  <!-- Launch actual driver node (if not in simulation)-->
+  <node name="puthand_controller" pkg="puthand_driver" type="puthand_controller" output="screen">
+    <param name="Thumb_j1_min" value="0"/>
+    <param name="Thumb_j1_max" value="2.3551"/>
+    <param name="Thumb_j2_min" value="-0.93899"/>
+    <param name="Thumb_j2_max" value="0.93899"/>
+    <param name="Thumb_j3_min" value="0"/>
+    <param name="Thumb_j3_max" value="1.5708"/>
+    <param name="Index_Finger_j1_min" value="0.24958"/>
+    <param name="Index_Finger_j1_max" value="1.5656"/>
+    <param name="Index_Finger_j2_min" value="0"/>
+    <param name="Index_Finger_j2_max" value="1.6755"/>
+    <param name="Middle_Finger_j1_min" value="0.24958"/>
+    <param name="Middle_Finger_j1_max" value="1.5656"/>
+    <param name="Middle_Finger_j2_min" value="0"/>
+    <param name="Middle_Finger_j2_max" value="1.6755"/>
+    <param name="Ring_Finger_j1_min" value="0.0"/>
+    <param name="Ring_Finger_j1_max" value="1.5708"/>
+    <param name="Ring_Finger_j2_min" value="0.0"/>
+    <param name="Ring_Finger_j2_max" value="1.7261"/>
+    <param name="Ring_Finger_j3_min" value="0.0"/>
+    <param name="Ring_Finger_j3_max" value="1.7436"/>
+    <param name="Pinky_Finger_j1_min" value="0.0"/>
+    <param name="Pinky_Finger_j1_max" value="1.5708"/>
+    <param name="Pinky_Finger_j2_min" value="0.0"/>
+    <param name="Pinky_Finger_j2_max" value="1.7261"/>
+    <param name="Pinky_Finger_j3_min" value="0.0"/>
+    <param name="Pinky_Finger_j3_max" value="1.7436"/>
+    <param name="serial_device" value="$(arg serial_device)"/>
+    <param name="autostart" value="$(arg autostart)" />
+    <!-- Params for the ICL (driver internal) logging. General configuration in the given logging.xml, output will be saved to the who given files -->
+    <param name="logging_config" value="$(arg logging_config)" />
+    <param name="use_internal_logging" value="$(arg use_internal_logging)" />
+    <param name="name_prefix" value="$(arg name_prefix)" />
+    <param name="simulation" value="$(arg simulation)" />
+  </node>
+
+  <!-- Start RQT by default if not specified otherwise -->
+  <node if="$(arg gui)" name="rqt_gui" pkg="rqt_gui" type="rqt_gui" />
+
+  <!-- Joint state publisher is needed in order to use the mimic tag within the URDF (needed for propper visualization) Hardware will work without it thoug -->
+  <node unless="$(arg simulation)" name="output_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+            <rosparam unless="$(arg simulation)" param="source_list">["puthand_controller/channel_feedback"] </rosparam>
+            <!-- in case of a simulation the input shall behave like the regular input -->
+            <rosparam if="$(arg simulation)" param="source_list">["puthand_controller/channel_targets"] </rosparam>
+            <!-- Never show the output gui of this one. We just use it to get the mimic tag of the urdf right -->
+            <param name="use_gui" value="false" />
+    </node>
+
+<!--  <rosparam file="$(find puthand_gazebo)/controller/puthand_controller.yaml" command="load"/>
+  <node name="puthand_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn puthand_controller" respawn="false" output="screen"/>-->
+
+  <!-- Robot state publisher for the TFs -->
+  <node unless="$(arg standalone)" name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+  </node>
+
+  <!-- Joint state publisher to provide easy control of the real hardware. Just enabled if you want to use it standalone to provide easy acces with sliders -->
+  <node if="$(arg gui)" name="input_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <rosparam>
+            zeros:
+                left_hand_Thumb_j1: 2.1
+                left_hand_Thumb_j2: 0.6
+                left_hand_Thumb_j3: 0.7
+                left_hand_Index_Finger_j1: 0.2 
+                left_hand_Index_Finger_j2: 1.2
+                left_hand_Middle_Finger_j1: 0.2 
+                left_hand_Middle_Finger_j2: 1.2
+                left_hand_Ring_Finger_j1: 0.0 
+                left_hand_Pinky_Finger_j1: 0.0
+        </rosparam>
+        <remap from="joint_states" to="puthand_controller/channel_targets" />
+        <!-- if this node is used we always want to see its output -->
+        <param name="use_gui" value="true"/>
+  </node>
+  
+  <include if="$(arg with_optoforce)" file="$(find optoforce)/launch/optoforce.launch">
+  </include>
+  
+  <node if="$(arg with_optoforce)" type="static_transform_publisher" pkg="tf" name="optoforce_link0" args="0 0 0 0 0 0 left_hand_thumb_tip /optoforce_0 100" />
+  <node if="$(arg with_optoforce)" type="static_transform_publisher" pkg="tf" name="optoforce_link1" args="0 0 0 0 0 0 left_hand_index_finger_tip /optoforce_2 100" />
+  <node if="$(arg with_optoforce)" type="static_transform_publisher" pkg="tf" name="optoforce_link2" args="0 0 0 0 0 0 left_hand_middle_finger_tip /optoforce_3 100" />
+  
+</launch>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="simulation" default="False"/>
+  <arg name="serial_device" default="/dev/ttyUSB0"/>
+  <arg name="name_prefix" default="left_hand"/>
+
+  <include file="$(find puthand_driver)/launch/puthand_controller.launch">
+    <arg name="standalone" value="False" />
+    <arg name="simulation" value="$(arg simulation)" />
+    <arg name="serial_device" value="$(arg serial_device)" />
+  </include>
+
+  <node name="puthand_sin_test" pkg="puthand_driver" type="puthand_sin_test" output="screen" >
+    <remap from="~channel_targets" to="/puthand_controller/channel_targets"/>
+    <param name="name_prefix" value="$(arg name_prefix)" />
+  </node>
+  
+</launch>

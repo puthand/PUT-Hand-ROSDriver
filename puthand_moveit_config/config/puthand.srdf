@@ -1,0 +1,223 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="puthand">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="thumb">
+        <chain base_link="left_hand_base_link" tip_link="left_hand_thumb_tip" />
+    </group>
+    <group name="index_finger">
+        <chain base_link="left_hand_base_link" tip_link="left_hand_index_finger_tip" />
+    </group>
+    <group name="middle_finger">
+        <chain base_link="left_hand_base_link" tip_link="left_hand_middle_finger_tip" />
+    </group>
+    <group name="fingers">
+        <group name="thumb" />
+        <group name="index_finger" />
+        <group name="middle_finger" />
+        <group name="ring_finger" />
+        <group name="pinky_finger" />
+    </group>
+    <group name="ring_finger">
+        <chain base_link="left_hand_base_link" tip_link="left_hand_ring_finger_tip" />
+    </group>
+    <group name="pinky_finger">
+        <chain base_link="left_hand_base_link" tip_link="left_hand_pinky_finger_tip" />
+    </group>
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="FixedBase" type="fixed" parent_frame="world" child_link="base_link" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_index1" reason="Adjacent" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_index2" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_index3" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_index_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_middle1" reason="Adjacent" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_middle2" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_middle3" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_middle_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_pinky1" reason="Adjacent" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_pinky2" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_pinky3" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_ring1" reason="Adjacent" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_thumb1" reason="Adjacent" />
+    <disable_collisions link1="left_hand_base_link" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_index2" reason="Adjacent" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_index3" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_index_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_middle1" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_middle2" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_middle3" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_middle_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_pinky1" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_pinky2" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_pinky3" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_index1" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_index3" reason="Adjacent" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_index_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_middle1" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_middle2" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_middle3" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_middle_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_pinky1" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_pinky2" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_pinky3" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_index2" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_index_finger_tip" reason="Adjacent" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_middle1" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_middle2" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_middle3" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_middle_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_pinky1" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_pinky2" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_pinky3" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_index3" link2="left_hand_thumb3" reason="Default" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_middle1" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_middle2" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_middle3" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_middle_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_pinky1" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_pinky2" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_pinky3" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_index_finger_tip" link2="left_hand_thumb3" reason="Default" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_middle2" reason="Adjacent" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_middle3" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_middle_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_pinky1" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_pinky2" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_pinky3" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_middle1" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_middle3" reason="Adjacent" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_middle_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_pinky1" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_pinky2" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_pinky3" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_middle2" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_middle_finger_tip" reason="Adjacent" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_pinky1" reason="Never" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_pinky2" reason="Never" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_pinky3" reason="Never" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle3" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_middle_finger_tip" link2="left_hand_pinky1" reason="Never" />
+    <disable_collisions link1="left_hand_middle_finger_tip" link2="left_hand_pinky2" reason="Never" />
+    <disable_collisions link1="left_hand_middle_finger_tip" link2="left_hand_pinky3" reason="Never" />
+    <disable_collisions link1="left_hand_middle_finger_tip" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle_finger_tip" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_middle_finger_tip" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_middle_finger_tip" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_middle_finger_tip" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_middle_finger_tip" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_pinky1" link2="left_hand_pinky2" reason="Adjacent" />
+    <disable_collisions link1="left_hand_pinky1" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_pinky1" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_pinky1" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_pinky1" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_pinky1" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_pinky1" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_pinky1" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_pinky1" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_pinky2" link2="left_hand_pinky3" reason="Adjacent" />
+    <disable_collisions link1="left_hand_pinky2" link2="left_hand_pinky_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_pinky2" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_pinky2" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_pinky2" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_pinky2" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_pinky2" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_pinky2" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_pinky2" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_pinky3" link2="left_hand_pinky_finger_tip" reason="Adjacent" />
+    <disable_collisions link1="left_hand_pinky3" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_pinky3" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_pinky3" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_pinky3" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_pinky3" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_pinky3" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_pinky3" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_pinky_finger_tip" link2="left_hand_ring1" reason="Never" />
+    <disable_collisions link1="left_hand_pinky_finger_tip" link2="left_hand_ring2" reason="Never" />
+    <disable_collisions link1="left_hand_pinky_finger_tip" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_pinky_finger_tip" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_pinky_finger_tip" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_pinky_finger_tip" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_pinky_finger_tip" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_pinky_finger_tip" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_ring1" link2="left_hand_ring2" reason="Adjacent" />
+    <disable_collisions link1="left_hand_ring1" link2="left_hand_ring3" reason="Never" />
+    <disable_collisions link1="left_hand_ring1" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_ring1" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_ring1" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_ring1" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_ring1" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_ring2" link2="left_hand_ring3" reason="Adjacent" />
+    <disable_collisions link1="left_hand_ring2" link2="left_hand_ring_finger_tip" reason="Never" />
+    <disable_collisions link1="left_hand_ring2" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_ring2" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_ring2" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_ring2" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_ring3" link2="left_hand_ring_finger_tip" reason="Adjacent" />
+    <disable_collisions link1="left_hand_ring3" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_ring3" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_ring3" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_ring3" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_ring_finger_tip" link2="left_hand_thumb1" reason="Never" />
+    <disable_collisions link1="left_hand_ring_finger_tip" link2="left_hand_thumb2" reason="Never" />
+    <disable_collisions link1="left_hand_ring_finger_tip" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_ring_finger_tip" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_thumb1" link2="left_hand_thumb2" reason="Adjacent" />
+    <disable_collisions link1="left_hand_thumb1" link2="left_hand_thumb3" reason="Never" />
+    <disable_collisions link1="left_hand_thumb1" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_thumb2" link2="left_hand_thumb3" reason="Adjacent" />
+    <disable_collisions link1="left_hand_thumb2" link2="left_hand_thumb_tip" reason="Never" />
+    <disable_collisions link1="left_hand_thumb3" link2="left_hand_thumb_tip" reason="Adjacent" />
+</robot>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot name="puthand" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    
+ <!-- common stuff -->
+ <xacro:include filename="$(find puthand_driver)/description/urdf/common.gazebo.xacro" />
+  
+ <xacro:include filename="$(find puthand_driver)/description/urdf/puthand.urdf.xacro" />
+
+ <link name="base_link" />
+ 
+ <xacro:puthand parent="base_link" name="left_hand" prefix="">
+    <origin xyz="0 0 0"  rpy= "0 0 0" />
+  </xacro:puthand>
+  
+   <link name="world" />
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link = "base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+</robot>

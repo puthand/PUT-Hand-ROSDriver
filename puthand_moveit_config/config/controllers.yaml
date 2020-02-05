@@ -1,0 +1,18 @@
+controller_list:
+  - name: "/puthand/puthand_controller"
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    joints:
+      - left_hand_Thumb_j1
+      - left_hand_Thumb_j2
+      - left_hand_Thumb_j3
+      - left_hand_Index_Finger_j1
+      - left_hand_Index_Finger_j2
+      - left_hand_Middle_Finger_j1
+      - left_hand_Middle_Finger_j2
+      - left_hand_Ring_Finger_j1
+      - left_hand_Ring_Finger_j2
+      - left_hand_Ring_Finger_j3
+      - left_hand_Pinky_Finger_j1
+      - left_hand_Pinky_Finger_j2
+      - left_hand_Pinky_Finger_j3

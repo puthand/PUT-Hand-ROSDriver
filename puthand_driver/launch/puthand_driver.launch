@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="with_optoforce" default="false"/>
+  
+  <!-- puthand controller -->
+  <group ns="/puthand">
+    <include file="$(find puthand_driver)/launch/puthand_controller.launch">
+        <arg name="simulation" value="false"/>
+        <arg name="standalone" value="false"/>
+        <arg name="autostart" value="true"/>
+        <arg name="serial_device" value="/dev/ttyUSB0"/>
+        <arg name="gui" value="false"/> 
+        <arg name="with_optoforce" value="$(arg with_optoforce)"/> 
+    </include>
+  </group>
+  
+  <!-- <node name="joint_states" pkg="joint_state_publisher" type="joint_state_publisher"> -->
+       <rosparam param="source_list">[/puthand/joint_states]</rosparam>
+  <!-- </node> -->
+
+</launch>

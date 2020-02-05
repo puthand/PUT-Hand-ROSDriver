@@ -1,0 +1,63 @@
+puthand/puthand_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+     - left_hand_Thumb_j1
+     - left_hand_Thumb_j2
+     - left_hand_Thumb_j3
+     - left_hand_Index_Finger_j1
+     - left_hand_Index_Finger_j2
+     - left_hand_Middle_Finger_j1
+     - left_hand_Middle_Finger_j2
+     - left_hand_Ring_Finger_j1
+     - left_hand_Ring_Finger_j2
+     - left_hand_Ring_Finger_j3
+     - left_hand_Pinky_Finger_j1
+     - left_hand_Pinky_Finger_j2
+     - left_hand_Pinky_Finger_j3
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      left_hand_Thumb_j1: {trajectory: 0.1, goal: 0.1}
+      left_hand_Thumb_j2: {trajectory: 0.1, goal: 0.1}
+      left_hand_Thumb_j3: {trajectory: 0.1, goal: 0.1}
+      left_hand_Index_Finger_j1: {trajectory: 0.1, goal: 0.1}
+      left_hand_Index_Finger_j2: {trajectory: 0.1, goal: 0.1}
+      left_hand_Middle_Finger_j1: {trajectory: 0.1, goal: 0.1}
+      left_hand_Middle_Finger_j2: {trajectory: 0.1, goal: 0.1}
+      left_hand_Ring_Finger_j1: {trajectory: 0.1, goal: 0.1}
+      left_hand_Ring_Finger_j2: {trajectory: 0.1, goal: 0.1}
+      left_hand_Ring_Finger_j3: {trajectory: 0.1, goal: 0.1}
+      left_hand_Pinky_Finger_j1: {trajectory: 0.1, goal: 0.1}
+      left_hand_Pinky_Finger_j2: {trajectory: 0.1, goal: 0.1}
+      left_hand_Pinky_Finger_j3: {trajectory: 0.1, goal: 0.1}
+  #gains:
+      #left_hand_Thumb_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Thumb_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Thumb_j3: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Index_Finger_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Index_Finger_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Middle_Finger_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Middle_Finger_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Ring_Finger_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Ring_Finger_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Ring_Finger_j3: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Pinky_Finger_j1: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Pinky_Finger_j2: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      #left_hand_Pinky_Finger_j3: {p: 100,  d: 1, i: 1, i_clamp: 1}
+  #gazebo_ros_control/pid_gains:
+      #left_hand_Thumb_j1: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Thumb_j2: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Thumb_j3: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Index_Finger_j1: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Index_Finger_j2: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Middle_Finger_j1: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Middle_Finger_j2: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Ring_Finger_j1: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Ring_Finger_j2: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Ring_Finger_j3: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Pinky_Finger_j1: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Pinky_Finger_j2: {p: 1.0, i: 0.0, d: 1.0}
+      #left_hand_Pinky_Finger_j3: {p: 1.0, i: 0.0, d: 1.0}
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  25
+  action_monitor_rate: 10

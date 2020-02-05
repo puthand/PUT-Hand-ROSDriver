@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="with_optoforce" default="false"/>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find puthand_gazebo)/worlds/puthand.world"/>
+     <!-- more default parameters can be changed here -->
+  </include>
+  
+  <!-- Convert an xacro and put on parameter server -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find puthand_driver)/description/urdf/puthand-standalone.urdf.xacro'" />
+
+  <!-- Spawn a robot into Gazebo -->
+<!--   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model puthand" /> -->
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model puthand -z 0.1" respawn="false" output="screen" />
+  
+  <include file="$(find puthand_gazebo)/launch/controller_utils.launch"/>
+
+  <rosparam file="$(find puthand_gazebo)/controller/puthand_controller.yaml" command="load"/>
+  <node name="hand_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn puthand/puthand_controller" respawn="false" output="screen">
+  </node>
+  
+  <node name="puthand_set_init_conf" pkg="puthand_set_init_conf" type="puthand_set_init_conf_node" respawn="false" output="screen">
+  </node>
+  
+  
+  <include if="$(arg with_optoforce)" file="$(find optoforce)/launch/optoforce.launch">
+  </include>
+  
+  <node if="$(arg with_optoforce)" type="static_transform_publisher" pkg="tf" name="optoforce_link0" args="0 0 0 0 3.14 0 left_hand_thumb_tip /optoforce_0 100" />
+  <node if="$(arg with_optoforce)" type="static_transform_publisher" pkg="tf" name="optoforce_link1" args="0 0 0 0 3.14 0 left_hand_index_finger_tip /optoforce_2 100" />
+  <node if="$(arg with_optoforce)" type="static_transform_publisher" pkg="tf" name="optoforce_link2" args="0 0 0 0 3.14 0 left_hand_middle_finger_tip /optoforce_3 100" />
+  
+</launch>

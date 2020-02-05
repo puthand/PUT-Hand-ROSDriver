@@ -1,0 +1,559 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find puthand_driver)/description/urdf/puthand.transmission.xacro" />
+  <xacro:include filename="$(find puthand_driver)/description/urdf/puthand.gazebo.xacro" />
+  
+  <xacro:property name="cyl_radius" value="0.001" />
+  
+  <!-- Inertia parameters -->
+  <xacro:property name="base_mass" value="0.1" />  <!-- This mass might be incorrect -->
+  <xacro:property name="index1_mass" value="0.05" />
+  <xacro:property name="index2_mass" value="0.05" />
+  <xacro:property name="index3_mass" value="0.05" />
+  <xacro:property name="middle1_mass" value="0.05" />
+  <xacro:property name="middle2_mass" value="0.05" />
+  <xacro:property name="middle3_mass" value="0.05" />
+  <xacro:property name="ring1_mass" value="0.05" />
+  <xacro:property name="ring2_mass" value="0.05" />
+  <xacro:property name="ring3_mass" value="0.05" />
+  <xacro:property name="pinky1_mass" value="0.05" />
+  <xacro:property name="pinky2_mass" value="0.05" />
+  <xacro:property name="pinky3_mass" value="0.05" />
+  
+  <xacro:macro name="cylinder_inertial" params="radius length mass *origin">
+    <inertial>
+      <mass value="${mass}" />
+      <xacro:insert_block name="origin" />
+      <inertia ixx="${0.0833333 * mass * (3 * radius * radius + length * length)}" ixy="0.0" ixz="0.0"
+        iyy="${0.0833333 * mass * (3 * radius * radius + length * length)}" iyz="0.0"
+        izz="${0.5 * mass * radius * radius}" />
+    </inertial>
+  </xacro:macro>
+  
+  <xacro:macro name="puthand" params="parent name prefix *origin">
+    <!-- RIGHT HAND = 1, LEFT HAND = -1 -->
+    <!-- BASE_LINE LINKS -->
+    
+    <joint name="${prefix}${name}_base_joint" type="fixed" >
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}" />
+      <child link="${prefix}${name}_base_link" />
+    </joint>
+    
+    <link name="${prefix}${name}_base_link">
+      <xacro:insert_block name="origin" />
+      <visual>
+	<origin xyz="0 0 0.0" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/metacarpusNew.dae" />
+	</geometry>
+      </visual>
+      <collision>
+	<origin xyz="0 0 0.0" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/metacarpusNew.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.015" length="0.038" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+        
+    <!-- THUMB LINKS -->
+    <link name="${prefix}${name}_thumb1">
+      <visual>
+	<origin xyz="0 0 0" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/metacarpal.dae" />
+	</geometry>
+      </visual>
+      <collision>
+	<origin xyz="0 0 0" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/metacarpal.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_thumb2">
+      <visual>
+	<origin xyz="0 0 0" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/thumbProximal.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/thumbProximal.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_thumb3">
+      <visual>
+	<origin xyz="0 0 0" rpy="0 0 -1.5708" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/thumbDistal.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="0 0 0" rpy="0 0 -1.5708" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/thumbDistal.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+    
+    <link name="${prefix}${name}_thumb_tip">
+        <collision>
+        <geometry>
+          <box size="0.01 0.01 0.01"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0.022 -0.003 0.006"/>
+      </collision>
+    </link>
+
+    <!-- THUMB JOINTS -->
+    <joint name="${prefix}${name}_Thumb_j1" type="revolute">
+      <parent link="${prefix}${name}_base_link" />
+      <child link="${prefix}${name}_thumb1" />
+      <limit effort="10.0" lower="0" upper="2.3551" velocity="1" />
+      <origin xyz="-0.022 0.0005 0.04601" rpy="-0.46914 -0.32725 0.16162" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="${prefix}${name}_Thumb_j2" type="revolute">
+      <parent link="${prefix}${name}_thumb1" />
+      <child link="${prefix}${name}_thumb2" />
+      <limit effort="10.0" lower="-0.93899" upper="0.93899" velocity="1" />
+      <origin xyz="0.018 0.012 0.030" rpy="-0.49986 -1.1535 0.46304" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <!-- JOINT Finger_Spread in BASE_LINE section for better UX -->
+    <joint name="${prefix}${name}_Thumb_j3" type="revolute">
+      <parent link="${prefix}${name}_thumb2" />
+      <child link="${prefix}${name}_thumb3" />
+      <limit effort="10.0" lower="0" upper="1.5708" velocity="1" />
+      <origin xyz="0.0405 0 0" rpy="0 0 0" />
+      <axis xyz="0 0 1" />
+<!--       <mimic joint="${name}_Index_Finger_Distal" multiplier="1.0450" offset="0" /> -->
+    </joint>
+    
+<!--     THUMB tip -->
+    <joint name="${prefix}${name}_thumb_joint_tip" type="fixed">
+<!--       <origin xyz="0.022 -0.00 0.00" rpy="0 1.57 ${pi+pi/-4.0}"/> -->
+      <origin xyz="-0.007 -0.022 0.0" rpy="0 1.57 ${-pi/2.0-pi/6.0}"/>
+      <parent link="${prefix}${name}_thumb3"/>
+      <child link="${prefix}${name}_thumb_tip"/>
+    </joint>
+    
+        <!-- INDEX FINGER LINKS -->
+    <link name="${prefix}${name}_index1">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerProximal.dae" />
+	</geometry>
+      </visual>
+      <collision>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerProximal.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_index2">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 1.5708" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerMiddle.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="-0.00 -0.00 0.00" rpy="0 0 1.5708" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerMiddle.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_index3">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerDistal.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="-0.00 -0.0 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerDistal.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+    
+    <link name="${prefix}${name}_index_finger_tip">
+        <collision>
+        <geometry>
+          <box size="0.01 0.01 0.01"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0.0 -0.0 0.0"/>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      </xacro:cylinder_inertial>
+    </link>
+
+    <!-- INDEX FINGER JOINTS -->
+    <joint name="${prefix}${name}_Index_Finger_j1" type="revolute">
+      <parent link="${prefix}${name}_base_link" />
+      <child link="${prefix}${name}_index1" />
+      <limit effort="10.0" lower="0.24958" upper="1.5656" velocity="1" />
+      <origin xyz="-0.02645 0.0025 0.12552" rpy="0 -1.7096 0.0" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="${prefix}${name}_Index_Finger_j2" type="revolute">
+      <parent link="${prefix}${name}_index1" />
+      <child link="${prefix}${name}_index2" />
+      <limit effort="10.0" lower="0" upper="1.6755" velocity="1" />
+      <origin xyz="0.045 0 0.0" rpy="0 0 0" />
+      <axis xyz="0 0 -1" />
+    </joint>
+
+    <joint name="${prefix}${name}_Index_Finger_j3" type="revolute">
+      <parent link="${prefix}${name}_index2" />
+      <child link="${prefix}${name}_index3" />
+      <limit effort="10.0" lower="0" upper="1.295" velocity="1" />
+      <origin xyz="0 0.025 0" rpy="0 0 3.14" />
+      <axis xyz="0 0 -1" />
+      <mimic joint="${prefix}${name}_Index_Finger_j2" multiplier="0.77292" offset="0" />
+    </joint>
+    
+    <joint name="${prefix}${name}_index_finger_joint_tip" type="fixed">
+        <origin xyz="0.022 0.006 0.0" rpy="0 -1.57 ${pi+pi/6.0}"/>
+      <parent link="${prefix}${name}_index3"/>
+      <child link="${prefix}${name}_index_finger_tip"/>
+    </joint>
+    
+    <!-- MIDDLE FINGER LINKS -->
+    <link name="${prefix}${name}_middle1">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerProximal.dae" />
+	</geometry>
+      </visual>
+      <collision>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerProximal.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_middle2">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 1.5708" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerMiddle.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="-0.00 -0.00 0.00" rpy="0 0 1.5708" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerMiddle.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_middle3">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerDistal.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/fingerDistal.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${base_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+    
+    <link name="${prefix}${name}_middle_finger_tip">
+        <collision>
+        <geometry>
+          <box size="0.01 0.01 0.01"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      </collision>
+    </link>
+
+    <!-- MIDDLE FINGER JOINTS -->
+    <joint name="${prefix}${name}_Middle_Finger_j1" type="revolute">
+      <parent link="${prefix}${name}_base_link" />
+      <child link="${prefix}${name}_middle1" />
+      <limit effort="10.0" lower="0.24958" upper="1.5656" velocity="1" />
+      <origin xyz="0.00325 0.0025 0.13125" rpy="0 -1.57 0" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="${prefix}${name}_Middle_Finger_j2" type="revolute">
+      <parent link="${prefix}${name}_middle1" />
+      <child link="${prefix}${name}_middle2" />
+      <limit effort="10.0" lower="0" upper="1.6755" velocity="1" />
+      <origin xyz="0.045 0 0.0" rpy="0 0 0" />
+      <axis xyz="0 0 -1" />
+    </joint>
+    
+    <joint name="${prefix}${name}_Middle_Finger_j3" type="revolute">
+      <parent link="${prefix}${name}_middle2" />
+      <child link="${prefix}${name}_middle3" />
+      <limit effort="10.0" lower="0" upper="1.295" velocity="1" />
+      <origin xyz="0 0.025 0" rpy="0 0 3.14" />
+      <axis xyz="0 0 -1" />
+      <mimic joint="${prefix}${name}_Middle_Finger_j2" multiplier="0.77292" offset="0" />
+    </joint>
+    
+    <joint name="${prefix}${name}_middle_finger_joint_tip" type="fixed">
+      <origin xyz="0.022 0.006 0.0" rpy="0 -1.57 ${pi+pi/6.0}"/>
+      <parent link="${prefix}${name}_middle3"/>
+      <child link="${prefix}${name}_middle_finger_tip"/>
+    </joint>
+    
+    
+    <!-- RING FINGER LINKS -->
+    <link name="${prefix}${name}_ring1">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f4phalanx1.dae" />
+	</geometry>
+      </visual>
+      <collision>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f4phalanx1.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${ring1_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_ring2">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f4phalanx2.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f4phalanx2.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${ring2_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_ring3">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f45phalanx3.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f45phalanx3.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${ring3_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+    
+    <link name="${prefix}${name}_ring_finger_tip">
+        <collision>
+        <geometry>
+          <box size="0.01 0.01 0.01"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0.022 -0.003 0.006"/>
+      </collision>
+    </link>
+
+    <!-- RING FINGER JOINTS -->
+    <joint name="${prefix}${name}_Ring_Finger_j1" type="revolute">
+      <parent link="${prefix}${name}_base_link" />
+      <child link="${prefix}${name}_ring1" />
+      <limit effort="10.0" lower="0.0" upper="1.57" velocity="1" />
+      <origin xyz="0.02799 0.0015 0.1285" rpy="0 -1.4312 0" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="${prefix}${name}_Ring_Finger_j2" type="revolute">
+      <parent link="${prefix}${name}_ring1" />
+      <child link="${prefix}${name}_ring2" />
+      <limit effort="10.0" lower="0" upper="1.7261" velocity="1" />
+      <origin xyz="0.04 0 0.0" rpy="0 0 0" />
+      <axis xyz="0 0 1" />
+<!--       <mimic joint="${prefix}${name}_Ring_Finger_j1" multiplier="0.77292" offset="0" /> -->
+    </joint>
+
+    <joint name="${prefix}${name}_Ring_Finger_j3" type="revolute">
+      <parent link="${prefix}${name}_ring2" />
+      <child link="${prefix}${name}_ring3" />
+      <limit effort="10.0" lower="0" upper="1.7418" velocity="1" />
+      <origin xyz="0.025 0 0" rpy="0 0 0.0" />
+      <axis xyz="0 0 1" />
+<!--       <mimic joint="${prefix}${name}_Ring_Finger_j1" multiplier="0.77292" offset="0" /> -->
+    </joint>
+    
+    <joint name="${prefix}${name}_ring_finger_joint_tip" type="fixed">
+      <origin xyz="0.0122 -0.003 0.006" rpy="0 1.57 ${pi+pi/-4.0}"/>
+      <parent link="${prefix}${name}_ring3"/>
+      <child link="${prefix}${name}_ring_finger_tip"/>
+    </joint>
+
+    <!-- PINKY FINGER LINKS -->
+    <link name="${prefix}${name}_pinky1">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f5phalanx1.dae" />
+	</geometry>
+      </visual>
+      <collision>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f5phalanx1.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${pinky1_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_pinky2">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f5phalanx2.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f5phalanx2.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${pinky2_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+
+    <link name="${prefix}${name}_pinky3">
+      <visual>
+	<origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f45phalanx3.dae" />
+	</geometry>
+      </visual>
+      <collision>
+          <origin xyz="-0.00 -0.00 0.00" rpy="0 0 0" />
+	<geometry>
+          <mesh filename="package://puthand_driver/description/meshes/f45phalanx3.dae" />
+	</geometry>
+      </collision>
+      <xacro:cylinder_inertial radius="0.003" length="0.01" mass="${pinky3_mass}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+      </xacro:cylinder_inertial>
+    </link>
+    
+    <link name="${prefix}${name}_pinky_finger_tip">
+        <collision>
+        <geometry>
+          <box size="0.01 0.01 0.01"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0.022 -0.003 0.006"/>
+      </collision>
+    </link>
+
+    <!-- PINKY FINGER JOINTS -->
+    <joint name="${prefix}${name}_Pinky_Finger_j1" type="revolute">
+      <parent link="${prefix}${name}_base_link" />
+      <child link="${prefix}${name}_pinky1" />
+      <limit effort="10.0" lower="0.0" upper="1.57" velocity="1" />
+      <origin xyz="0.04959 0.0015 0.11727" rpy="0 -1.2915 0" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="${prefix}${name}_Pinky_Finger_j2" type="revolute">
+      <parent link="${prefix}${name}_pinky1" />
+      <child link="${prefix}${name}_pinky2" />
+      <limit effort="10.0" lower="0" upper="1.7261" velocity="1" />
+      <origin xyz="0.035 0 0.0" rpy="0 0 0" />
+      <axis xyz="0 0 1" />
+<!--       <mimic joint="${prefix}${name}_Pinky_Finger_j1" multiplier="0.77292" offset="0" /> -->
+    </joint>
+
+    <joint name="${prefix}${name}_Pinky_Finger_j3" type="revolute">
+      <parent link="${prefix}${name}_pinky2" />
+      <child link="${prefix}${name}_pinky3" />
+      <limit effort="10.0" lower="0" upper="1.7418" velocity="1" />
+      <origin xyz="0.02 0 0" rpy="0 0 0" />
+      <axis xyz="0 0 1" />
+<!--       <mimic joint="${prefix}${name}_Pinky_Finger_j1" multiplier="0.77292" offset="0" /> -->
+    </joint>
+    
+    <joint name="${prefix}${name}_pinky_finger_joint_tip" type="fixed">
+      <origin xyz="0.0122 -0.003 0.006" rpy="0 1.57 ${pi+pi/-4.0}"/>
+      <parent link="${prefix}${name}_pinky3"/>
+      <child link="${prefix}${name}_pinky_finger_tip"/>
+    </joint>
+    
+    
+    <xacro:puthand_transmission name="${prefix}${name}" />
+    <xacro:puthand_gazebo name="${prefix}${name}" />
+    
+</xacro:macro>
+</robot>
+

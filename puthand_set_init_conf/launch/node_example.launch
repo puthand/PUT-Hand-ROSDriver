@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+  Example launch. 
+
+  Usage: 
+-->
+<launch>
+  
+  <!-- ur common -->
+  <include file="$(find ur_gazebo)/launch/ur3.launch">
+  </include>
+
+  <!-- node example -->
+  <node name="node_ex" pkg="node_example" type="node_example_node"/>
+  
+</launch>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<package>
+  
+  <name>puthand_driver</name>
+  <version>0.2.0</version>
+  <description>PUT Driver wrapper to enable control of the PUT hand</description>
+  
+  <maintainer email="dominik.belter@put.poznan.pl">Dominik Belter</maintainer>
+
+  <license>LGPL</license>
+
+  <author email="dominik.belter@put.poznan.pl">Dominik Belter</author>
+   <url>http://www.lrm.put.poznan.pl</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>rqt_gui</build_depend>
+  <build_depend>rqt_gui_py</build_depend> 
+  <build_depend>urdf</build_depend>
+  <build_depend>xacro</build_depend>
+  <build_depend>dynamic_reconfigure</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
+
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>rqt_gui</run_depend>
+  <run_depend>rqt_gui_py</run_depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+  <run_depend>dynamic_reconfigure</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
+  
+  <export>
+ 	<rqt_gui plugin="${prefix}/plugin.xml" />
+        <rosdoc config="etc/rosdoc.yaml" />
+  </export>
+  
+</package>

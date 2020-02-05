@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="puthand_transmission" params="name">
+
+    <transmission name="${name}_Index_Finger_j1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Index_Finger_j1">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Index_Finger_j1_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  
+    <transmission name="${name}_Index_Finger_j2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Index_Finger_j2">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Index_Finger_j2_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <transmission name="${name}_Middle_Finger_j1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Middle_Finger_j1">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Middle_Finger_j1_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  
+    <transmission name="${name}_Middle_Finger_j2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Middle_Finger_j2">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Middle_Finger_j2_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <transmission name="${name}_Ring_Finger_j1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Ring_Finger_j1">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Ring_Finger_j1_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <transmission name="${name}_Ring_Finger_j2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Ring_Finger_j2">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Ring_Finger_j2_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <transmission name="${name}_Ring_Finger_j3_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Ring_Finger_j3">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Ring_Finger_j3_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <transmission name="${name}_Pinky_Finger_j1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Pinky_Finger_j1">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Pinky_Finger_j1_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <transmission name="${name}_Pinky_Finger_j2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Pinky_Finger_j2">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Pinky_Finger_j2_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <transmission name="${name}_Pinky_Finger_j3_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Pinky_Finger_j3">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Pinky_Finger_j3_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  
+    <transmission name="${name}_Thumb_j1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Thumb_j1">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Thumb_j1_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  
+    <transmission name="${name}_Thumb_j2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Thumb_j2">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Thumb_j2_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  
+    <transmission name="${name}_Thumb_j3_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_Thumb_j3">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_Thumb_j3_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+  </xacro:macro>
+
+</robot>

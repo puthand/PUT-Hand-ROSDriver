@@ -1,0 +1,12 @@
+<library path="src">
+  <class name="put_reset_gui" type="rqt_put_reset_gui.put_reset_gui.PUTResetGui" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      Reset interface for the PUT hand
+    </description>
+    <qtgui>
+      <label>PUT Reset</label>
+      <icon type="theme">system-help</icon>
+      <statustip>PUT gui for convenient resetting</statustip>
+    </qtgui>
+  </class>
+</library>
