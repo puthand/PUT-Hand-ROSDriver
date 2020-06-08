@@ -2,7 +2,7 @@
 Clone puthand repository to the src folder in your workspace:
 
     $ cd catkin_ws/src
-    $ git clone https://bitbucket.org/romanelo/puthand_driver
+    $ git clone https://github.com/puthand/PUT-Hand-ROSDriver
 
 Clone puthand communication library to the puthan_driver node:
 
