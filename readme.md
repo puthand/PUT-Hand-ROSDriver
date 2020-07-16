@@ -7,7 +7,7 @@ Clone puthand repository to the src folder in your workspace:
 Clone puthand communication library to the puthan_driver node:
 
     $ cd puthand_driver/puthand_driver
-    $ git clone https://github.com/puthand/liderhand-pc-commprotocol
+    $ git clone https://github.com/puthand/PUT-Hand-PC-CommProtocol
 
 Compile the sources:
 
